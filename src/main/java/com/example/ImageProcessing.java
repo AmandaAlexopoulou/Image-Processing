@@ -1,5 +1,3 @@
-package com.example;
-
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,21 +5,21 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Random;
 import javax.imageio.ImageIO;
+public class ImageProcessing {
+	public static void main(String[] args) {
+    // The provided images are apple.jpg, flower.jpg, and kitten.jpg
+		int[][] imageData = imgToTwoD("./apple.jpg");
+    // Or load your own image using a URL!
+		//int[][] imageData = imgToTwoD("https://content.codecademy.com/projects/project_thumbnails/phaser/bug-dodger.png");
+		viewImageData(imageData);
+		int[][] trimmed = trimBorders(imageData, 60);
 
-/**
- * Loading the libraries required for image processing
- *Followed by  four utility methods.
- */
-public class ImageProcessing 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
-
-    //Image Processing Methods 
-
-    // Image Processing Methods
+    /*twoDToImage() accepts a 2D array of integers and a String for the file name.Then it converts the 2D array of int pixel data into an image and saves it.*/
+		twoDToImage(trimmed, "./trimmed_apple.jpg");
+		// int[][] allFilters = stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData), 50)), 200, 20, 40)));
+		// Painting with pixels
+	}
+	// Image Processing Methods
 	public static int[][] trimBorders(int[][] imageTwoD, int pixelCount) {
 		// Example Method
 		if (imageTwoD.length > pixelCount * 2 && imageTwoD[0].length > pixelCount * 2) {
@@ -113,10 +111,13 @@ public class ImageProcessing
 			System.out.println("Failed to save image: " + e.getLocalizedMessage());
 		}
 	}
+
+  /*The following method accepts an int value representing the pixel hexadecimal value and returns a 4 element int array consisting of the R, G, B, and A values (between 0 and 255). */
 	public static int[] getRGBAFromPixel(int pixelColorValue) {
 		Color pixelColor = new Color(pixelColorValue);
 		return new int[] { pixelColor.getRed(), pixelColor.getGreen(), pixelColor.getBlue(), pixelColor.getAlpha() };
 	}
+  /*IMPORTANT NOTE :In Java, pixels are stored as hexadecimal values. The previous method is used to extract the color components from the hexadecimal value for the pixel. */
 	public static int getColorIntValFromRGBA(int[] colorData) {
 		if (colorData.length == 4) {
 			Color color = new Color(colorData[0], colorData[1], colorData[2], colorData[3]);
@@ -126,6 +127,8 @@ public class ImageProcessing
 			return -1;
 		}
 	}
+
+  /*method used for extracting a 3x3 section from the top left of the image. For viewing the structure of the image data in both the raw pixel form and the extracted RGBA form*/
 	public static void viewImageData(int[][] imageTwoD) {
 		if (imageTwoD.length > 3 && imageTwoD[0].length > 3) {
 			int[][] rawPixels = new int[3][3];
