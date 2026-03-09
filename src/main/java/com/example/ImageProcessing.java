@@ -1,3 +1,6 @@
+package com.example;
+
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -5,17 +8,26 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Random;
 import javax.imageio.ImageIO;
+
 public class ImageProcessing {
 	public static void main(String[] args) {
-    // The provided images are apple.jpg, flower.jpg, and kitten.jpg
-		int[][] imageData = imgToTwoD("./apple.jpg");
-    // Or load your own image using a URL!
-		//int[][] imageData = imgToTwoD("https://content.codecademy.com/projects/project_thumbnails/phaser/bug-dodger.png");
-		viewImageData(imageData);
+    // loading my own image using a URL!
+
+		int[][] imageData = imgToTwoD("C:/Users/amale/Documents/Java Projects/image-processing/src/satoru_gojo_jujutsu_kaisen.jpg/");
+
+    //		//int[][] imageData = imgToTwoD("https://content.codecademy.com/projects/project_thumbnails/phaser/bug-dodger.png");
+		//viewImageData(imageData);
 		int[][] trimmed = trimBorders(imageData, 60);
 
+		//pasing our image to the negativeColor() method 
+
+		int[][] negativeImage =  negativeColor(trimmed);
+
+		
+
     /*twoDToImage() accepts a 2D array of integers and a String for the file name.Then it converts the 2D array of int pixel data into an image and saves it.*/
-		twoDToImage(trimmed, "./trimmed_apple.jpg");
+		twoDToImage(negativeImage, "C:/Users/amale/Documents/Java Projects/image-processing/src/gojo_negative.jpg");
+
 		// int[][] allFilters = stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData), 50)), 200, 20, 40)));
 		// Painting with pixels
 	}
@@ -35,9 +47,35 @@ public class ImageProcessing {
 			return imageTwoD;
 		}
 	}
+
+	/**This method will replace the color of each pixel in the image 
+	 * with the negative version of the pixel. This means that each color 
+	 * component of the pixel (R, G, and B) will be replaced with 255 minus the current value.  */
 	public static int[][] negativeColor(int[][] imageTwoD) {
-		// TODO: Fill in the code for this method
-		return null;
+		//creating a new 2d array to store the negative image -> same size as imageTwoD
+
+		int[][] negativeImage = new int[imageTwoD.length ][imageTwoD[0].length] ;
+		//3 colours : red, green ,blue ====> int[] rgba = new int[3];
+		//int[] rgba = new int[3];
+
+		int[][] transformedImage = new int[imageTwoD.length][imageTwoD[0].length];
+
+		for (int i = 0; i<imageTwoD.length;i++)
+		{
+			for (int j =0;j<imageTwoD[i].length;j++)
+			{
+					int[] rgba = getRGBAFromPixel(imageTwoD[i][j]); 
+					////3 colours : red, green ,blue
+					rgba[0] = 255 - rgba[0];
+					rgba[1] = 255 - rgba[1];
+					rgba[2] = 255 - rgba[2];
+
+					//gets the int hexadecimal pixel data from the RGBA array
+					transformedImage[i][j] = getColorIntValFromRGBA(rgba);
+			}
+		}
+		return transformedImage;
+		
 	}
 	public static int[][] stretchHorizontally(int[][] imageTwoD) {
 		// TODO: Fill in the code for this method
