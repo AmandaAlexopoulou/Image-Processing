@@ -29,6 +29,10 @@ replay_pid*
 # VS Code settings (optional, but safe to ignore)
 /.vscode/
 
+#Generated Images
+images/
+
+
 # Other OS files
 .DS_Store
 Thumbs.db
