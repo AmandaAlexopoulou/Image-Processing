@@ -57,7 +57,20 @@ public class ImageProcessing {
 		//STRETCHING THE IMAGE
 		// int[][] stretchedImage = stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData), 50)), 200, 20, 40)));
 		// Painting with pixels
+
+
+		//Shrinking the image vertically
+
+		int[][] verticallyShrinked = shrinkVertically(negativeImage);
+
+
+
 	}
+
+
+
+
+
 	// Image Processing Methods
 	public static int[][] trimBorders(int[][] imageTwoD, int pixelCount) {
 		// Example Method
@@ -140,11 +153,22 @@ public class ImageProcessing {
 	public static int[][] shrinkVertically(int[][] imageTwoD) {
 
 		//creating a new 2D array of ints which has half the number of rows of the input image and the same number of columns.
-
+		//[rows][columns]
 		int[][] vertShrinked = new int[imageTwoD.length/2][imageTwoD[0].length];
-		// TODO: Fill in the code for this method
-		return null;
+
+
+		for(int i = 0; i < imageTwoD[0].length/2; i++) {//CONTINUE FROM HERE TODAY
+    for(int j = 0; j < imageTwoD.length; j+=2) {
+
+		vertShrinked[i/2][j] = imageTwoD[i][j];
+    }
+}
+
+		// returning the modified image
+		return vertShrinked;
 	}
+
+
 	public static int[][] invertImage(int[][] imageTwoD) {
 		// TODO: Fill in the code for this method
 		return null;
