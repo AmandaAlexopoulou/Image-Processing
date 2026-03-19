@@ -9,16 +9,42 @@ import java.util.Arrays;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
+
+/**
+ * IMPORTANT!!! THE PROJECT'S PIPELINE : 
+ * 
+ * image file
+   ↓
+imgToTwoD()
+   ↓
+trimBorders()
+   ↓
+negativeColor()
+   ↓
+twoDToImage()
+   ↓
+saved image
+ */
+
 public class ImageProcessing {
 	public static void main(String[] args) {
     // loading my own image using a URL!
 
-		int[][] imageData = imgToTwoD("C:/Users/amale/Documents/Java Projects/image-processing/src/satoru_gojo_jujutsu_kaisen.jpg/");
 
-    //		//int[][] imageData = imgToTwoD("https://content.codecademy.com/projects/project_thumbnails/phaser/bug-dodger.png");
+	
+		
+		int[][] imageData = imgToTwoD("C:\\Users\\amale\\Documents\\Java Projects\\image-processing\\src\\images\\satoru_gojo_jujutsu_kaisen.jpg");
+		
+		//to prevent future crashes 
+		if (imageData == null) {
+    System.err.println("Could not load image.");
+    return;
+}
+		
+    	//int[][] imageData = imgToTwoD("C:\\Users\\\\amale\\\\Documents\\\\Java Projects\\\\image-processing\\\\src\\\\images\\\\satoru_gojo_jujutsu_kaisen.jpg");
 		//viewImageData(imageData);
+		//int[][] trimmed = trimBorders(imageData, 60);
 		int[][] trimmed = trimBorders(imageData, 60);
-
 		//pasing our image to the negativeColor() method 
 
 		int[][] negativeImage =  negativeColor(trimmed);
@@ -26,9 +52,10 @@ public class ImageProcessing {
 		
 
     /*twoDToImage() accepts a 2D array of integers and a String for the file name.Then it converts the 2D array of int pixel data into an image and saves it.*/
-		twoDToImage(negativeImage, "C:/Users/amale/Documents/Java Projects/image-processing/src/gojo_negative.jpg");
+		twoDToImage(negativeImage, "C:/Users/amale/Documents/Java Projects/image-processing/src/images/gojo_negative.jpg");
 
-		// int[][] allFilters = stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData), 50)), 200, 20, 40)));
+		//STRETCHING THE IMAGE
+		// int[][] stretchedImage = stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData), 50)), 200, 20, 40)));
 		// Painting with pixels
 	}
 	// Image Processing Methods
@@ -77,11 +104,44 @@ public class ImageProcessing {
 		return transformedImage;
 		
 	}
+
+
+	//STRETCHING THE IMAGE BOTH HORIZONTALLY AND VERTICALLY
+
+	//METHOD TO BE IMPLEMENTED
 	public static int[][] stretchHorizontally(int[][] imageTwoD) {
-		// TODO: Fill in the code for this method
-		return null;
+		//will double the width of the provided image data.
+		/*For every pixel in the original image, it will copy it and place two duplicate pixels side-by-side into the new modified image*/
+		int[][] modifiedImageData = new int[imageTwoD.length][imageTwoD[0].length*2];
+
+		//an additional variable which will keep track of which position we are in for the modified image (since it is double the width).
+		int modImPosition = 0;//-> will equal double the column index in the inner for loop
+
+		/** nested for loops to iterate through every pixel in the input image using row-major order.  */
+		for (int k=0; k<imageTwoD.length;k++)
+		{
+			for (int j=0;j<imageTwoD[0].length; j++)
+			{
+					modImPosition = 2 * j;
+					//copy the current pixel to the modifiedImageData[k][modImPosition] position
+					modifiedImageData[k][modImPosition] = imageTwoD[k][j];
+					//copy the current pixel to the modifiedImageData[k][modImPosition+1] position
+					modifiedImageData[k][modImPosition+1] = imageTwoD[k][j];
+					}
+		}
+
+		//return the modified image
+		return modifiedImageData;
 	}
+
+
+
+	/**to shrink the image vertically, you will be halfing the height of the image and selecting every other pixel down each column to place in the modified image. */
 	public static int[][] shrinkVertically(int[][] imageTwoD) {
+
+		//creating a new 2D array of ints which has half the number of rows of the input image and the same number of columns.
+
+		int[][] vertShrinked = new int[imageTwoD.length/2][imageTwoD[0].length];
 		// TODO: Fill in the code for this method
 		return null;
 	}
