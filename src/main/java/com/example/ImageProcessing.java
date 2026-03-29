@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
@@ -207,9 +210,27 @@ public class ImageProcessing {
         return manipulatedImg;
     }
 
+
+    //PAINTING AN IMAGE OF RANDOM COLOURS 
+
     public static int[][] paintRandomImage(int[][] canvas) {
         //It will modify the image passed in by replacing every pixel with a randomly colored pixel.
-        return null;
+        Random rand = new Random();
+
+        for (int i = 0; i < canvas.length; i++) {
+            for (int j = 0; j < canvas[0].length; j++) {
+            
+            int randRed = rand.nextInt(256);
+            int randGreen = rand.nextInt(256);
+            int randBlue = rand.nextInt(256);
+
+           int[] rgbaValues = {randRed, randGreen, randBlue, 255};
+
+            canvas[i][j] = getColorIntValFromRGBA(rgbaValues);
+
+            }
+        }
+        return canvas;
     }
 
     public static int[][] paintRectangle(int[][] canvas, int width, int height, int rowPosition, int colPosition, int color) {
@@ -298,4 +319,118 @@ public class ImageProcessing {
             System.out.println("The image is not large enough to extract 9 pixels from the top left corner");
         }
     }
+
+
+
+
+    //SECOND CATEGORY PROBLEMS ---> WITH STATES 
+
+    /**
+     * HARD MODE PROBLEM
+
+Players still compete in rounds.
+BUT now:
+
+After each round, the winners are reordered by their skill in descending order before the next round starts.
+
+Return the round each player is eliminated.
+     */
+
+public static int[] eliminatedRound(int[] skills, int[] players) {
+    int N = players.length;
+    int[] eliminatedAt = new int[N];
+
+    List<Integer> current = new ArrayList<>();
+    for (int p : players) {
+        current.add(p);
+    }
+
+    int round = 1;
+
+    while (current.size() > 1) {
+        List<Integer> next = new ArrayList<>();
+
+        for (int i = 0; i < current.size(); i += 2) {
+            int p1 = current.get(i);
+            int p2 = current.get(i + 1);
+
+            if (skills[p1] > skills[p2]) {
+                eliminatedAt[p2] = round;
+                next.add(p1);
+            } else {
+                eliminatedAt[p1] = round;
+                next.add(p2);
+            }
+        }
+
+        current = next;
+        round++;
+        
+    }
 }
+
+/*
+Let’s break HARD MODE together (step by step, no pressure)
+🧩 Problem twist:
+
+After each round:
+
+Winners are reordered by skill (descending)
+
+🔥 First key shift
+
+In the original problem:
+
+Order was fixed → easy pairing
+
+Now:
+
+Order changes every round ❗
+
+👉 That’s why your previous approach breaks.
+
+🧠 New mental model
+
+Instead of:
+
+“process in fixed pairs”
+
+Think:
+
+“always pick the strongest available players”
+*/
+
+    public static int[] eliminatedRoundReorder(int[] skills, int[] players) {
+    int N = players.length;
+    int[] eliminatedAt = new int[N];
+
+            PriorityQueue<Integer> current = new PriorityQueue<>();
+
+    for (int p : players) {
+        current.add(p);
+    }
+
+    int round = 1;
+
+    while (current.size() > 1) {
+        List<Integer> next = new ArrayList<>();
+
+        for (int i = 0; i < current.size(); i += 2) {
+            int p1 = current.next(i);
+            int p2 = current.next(i + 1);
+
+            if (skills[p1] > skills[p2]) {
+                eliminatedAt[p2] = round;
+                next.add(p1);
+            } else {
+                eliminatedAt[p1] = round;
+                next.add(p2);
+            }
+        }
+
+        current = next;
+        round++;
+    }
+
+
+
