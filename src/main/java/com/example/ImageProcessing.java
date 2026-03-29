@@ -69,6 +69,15 @@ public class ImageProcessing {
 
             System.out.println("Image processing complete! Saved to: " + outputFile);
 
+
+            /**
+             * Testing the paintRandomImage method for painting the image with random colours 
+             */
+
+            int[][] blankCanvas = new int[500][500];
+
+            int[][] randomImage = paintRandomImage(blankCanvas);
+
         } // auto-close InputStream
     } catch (Exception e) {
         e.printStackTrace();
@@ -143,73 +152,28 @@ public class ImageProcessing {
     /*
 	This method modifies every pixel in the image by provided R, G, and B values as input parameters
 	. We must make sure that each color value does not leave the range of 0-255. */
-    public static int[][] colorFilter(int[][] imageTwoD, int redChangeValue, int greenChangeValue, int blueChangeValue) {
-        int[][] colouredImage = new int[imageTwoD.length][imageTwoD[0].length];
-		 for (int i = 0; i < imageTwoD.length; i++) {
-            for (int j = 0; j < imageTwoD[0].length; j++) {
+   public static int[][] colorFilter(int[][] imageTwoD, int redChangeValue, int greenChangeValue, int blueChangeValue) {
+    int[][] manipulatedImg = new int[imageTwoD.length][imageTwoD[0].length];
 
+    for (int i = 0; i < imageTwoD.length; i++) {
+        for (int j = 0; j < imageTwoD[0].length; j++) {
 
-				/**
-				 * 
-						For every pixel in the input image, 
-						we extract the RGBA color values using the provided method getRGBAFromPixel()
-				 */
-				int[] rgba = getRGBAFromPixel(imageTwoD[i][j]);
+            int[] rgba = getRGBAFromPixel(imageTwoD[i][j]);
 
-				
-			}
-		}
+            int newRed = Math.max(0, Math.min(255, rgba[0] + redChangeValue));
+            int newGreen = Math.max(0, Math.min(255, rgba[1] + greenChangeValue));
+            int newBlue = Math.max(0, Math.min(255, rgba[2] + blueChangeValue));
 
+            rgba[0] = newRed;
+            rgba[1] = newGreen;
+            rgba[2] = newBlue;
 
-		// store the values of each color plus the modifier value (which can be positive or negative).
-					int newRed = rgba[0] + redChangeValue;
-					int newGreen = rgba[1] + greenChangeValue;
-					int newBlue = rgba[2] + blueChangeValue;
-
-
-					if(newRed<0 )
-					{
-						newRed = 0;
-					}else if (newRed>255)
-					{
-						newRed=255;
-					}
-
-
-					if (newGreen<0)
-					{
-						newGreen = 0;
-					}else if (newGreen>255)
-					{
-						newGreen=255;
-					}
-
-					if (newBlue<0)
-					{
-						newBlue = 0;
-					}else if (newBlue>255)
-					{
-						newBlue=255;
-					}
-
-					rgba[0] = newRed;
-					rgba[1] = newGreen;
-					rgba[2] = newBlue;
-
-					int[][] manipulatedImg = new int[imageTwoD.length][imageTwoD[0].length]; 
-
-
-
-					 for (int i = 0; i < imageTwoD.length; i++) {
-            for (int j = 0; j < imageTwoD[0].length; j++) {
-					manipulatedImg[i][j] = getColorIntValFromRGBA(rgba);
-			}
-		}
-
-
-        return manipulatedImg;
+            manipulatedImg[i][j] = getColorIntValFromRGBA(rgba);
+        }
     }
 
+    return manipulatedImg;
+}
 
     //PAINTING AN IMAGE OF RANDOM COLOURS 
 
