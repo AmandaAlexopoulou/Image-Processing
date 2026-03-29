@@ -78,6 +78,18 @@ public class ImageProcessing {
 
             int[][] randomImage = paintRandomImage(blankCanvas);
 
+
+            //testing the paintRectangle method 
+            // Create a color (yellow)
+int[] rgba = {255, 255, 0, 255};
+int color = getColorIntValFromRGBA(rgba);
+
+// Draw rectangle ON THE IMAGE (not blank canvas)
+int[][] withRectangle = paintRectangle(negativeImage, 200, 100, 50, 50, color);
+
+// Save result
+twoDToImage(withRectangle, "output/gojo_with_rectangle.jpg");
+
         } // auto-close InputStream
     } catch (Exception e) {
         e.printStackTrace();
@@ -197,10 +209,28 @@ public class ImageProcessing {
         return canvas;
     }
 
-    public static int[][] paintRectangle(int[][] canvas, int width, int height, int rowPosition, int colPosition, int color) {
-        // TODO: Fill in the code for this method
-        return null;
+
+    //method that draws a rectangle on an image using a provided width, height, rowPosition, columnPosition, and color
+   public static int[][] paintRectangle(int[][] canvas, int width, int height, int rowPosition, int colPosition, int color) {
+    
+    int[][] result = new int[canvas.length][canvas[0].length];
+
+    // Copy original image
+    for (int i = 0; i < canvas.length; i++) {
+        for (int j = 0; j < canvas[0].length; j++) {
+            result[i][j] = canvas[i][j];
+        }
     }
+
+    // Draw rectangle
+    for (int i = rowPosition; i < rowPosition + height && i < canvas.length; i++) {
+        for (int j = colPosition; j < colPosition + width && j < canvas[0].length; j++) {
+            result[i][j] = color;
+        }
+    }
+
+    return result;
+}
 
     public static int[][] generateRectangles(int[][] canvas, int numRectangles) {
         // TODO: Fill in the code for this method
