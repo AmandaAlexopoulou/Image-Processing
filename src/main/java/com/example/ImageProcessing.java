@@ -232,10 +232,44 @@ twoDToImage(withRectangle, "output/gojo_with_rectangle.jpg");
     return result;
 }
 
+
+
+/**
+ * 
+ * Create Abstract Geometric Art Utilizing the paintRectangle Method
+ * @param canvas
+ * @param numRectangles
+ * @return
+ * 
+ * This will use the paintRectangles() method you created in order to paint a piece of art.
+ *  It will generate randomly positioned, sized, and colored rectangles based on the provided number. 
+ * The input parameter, numRectangles will determine how many randomly generated rectangles will be placed in the image.
+ * 
+ * 
+ */
     public static int[][] generateRectangles(int[][] canvas, int numRectangles) {
-        // TODO: Fill in the code for this method
-        return null;
+    Random rand = new Random();
+
+    for (int i = 0; i < numRectangles; i++) {
+
+        // Generate random size
+        int randHeight = rand.nextInt(canvas.length);
+        int randWidth = rand.nextInt(canvas[0].length);
+
+        // Generate valid position (so rectangle stays inside)
+        int rowPos = rand.nextInt(canvas.length - randHeight + 1);
+        int colPos = rand.nextInt(canvas[0].length - randWidth + 1);
+
+        // Random color
+        int[] rgba = {rand.nextInt(256), rand.nextInt(256), rand.nextInt(256), 255};
+        int randomColor = getColorIntValFromRGBA(rgba);
+
+        // Draw rectangle
+        canvas = paintRectangle(canvas, randWidth, randHeight, rowPos, colPos, randomColor);
     }
+
+    return canvas;
+}
 
     // Utility Methods
     public static int[][] imgToTwoD(String inputFileOrLink) {
@@ -315,6 +349,16 @@ twoDToImage(withRectangle, "output/gojo_with_rectangle.jpg");
     }
 
 }
+
+/**
+ * Note on Potential improvements:
+ * 
+ *  avoid repeated array allocations in loops
+ *  (e.g., reuse RGBA arrays), and ensure edge-case
+ *  handling for images smaller than expected before trimming. 
+ * Consider validating inputs (null checks) and handling image sizes gracefully.
+ * 
+ */
 
 
 
