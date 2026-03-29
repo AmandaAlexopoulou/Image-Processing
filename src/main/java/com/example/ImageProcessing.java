@@ -320,117 +320,12 @@ public class ImageProcessing {
         }
     }
 
-
-
-
-    //SECOND CATEGORY PROBLEMS ---> WITH STATES 
-
-    /**
-     * HARD MODE PROBLEM
-
-Players still compete in rounds.
-BUT now:
-
-After each round, the winners are reordered by their skill in descending order before the next round starts.
-
-Return the round each player is eliminated.
-     */
-
-public static int[] eliminatedRound(int[] skills, int[] players) {
-    int N = players.length;
-    int[] eliminatedAt = new int[N];
-
-    List<Integer> current = new ArrayList<>();
-    for (int p : players) {
-        current.add(p);
-    }
-
-    int round = 1;
-
-    while (current.size() > 1) {
-        List<Integer> next = new ArrayList<>();
-
-        for (int i = 0; i < current.size(); i += 2) {
-            int p1 = current.get(i);
-            int p2 = current.get(i + 1);
-
-            if (skills[p1] > skills[p2]) {
-                eliminatedAt[p2] = round;
-                next.add(p1);
-            } else {
-                eliminatedAt[p1] = round;
-                next.add(p2);
-            }
-        }
-
-        current = next;
-        round++;
-        
-    }
 }
 
-/*
-Let’s break HARD MODE together (step by step, no pressure)
-🧩 Problem twist:
 
-After each round:
 
-Winners are reordered by skill (descending)
 
-🔥 First key shift
-
-In the original problem:
-
-Order was fixed → easy pairing
-
-Now:
-
-Order changes every round ❗
-
-👉 That’s why your previous approach breaks.
-
-🧠 New mental model
-
-Instead of:
-
-“process in fixed pairs”
-
-Think:
-
-“always pick the strongest available players”
-*/
-
-    public static int[] eliminatedRoundReorder(int[] skills, int[] players) {
-    int N = players.length;
-    int[] eliminatedAt = new int[N];
-
-            PriorityQueue<Integer> current = new PriorityQueue<>();
-
-    for (int p : players) {
-        current.add(p);
-    }
-
-    int round = 1;
-
-    while (current.size() > 1) {
-        List<Integer> next = new ArrayList<>();
-
-        for (int i = 0; i < current.size(); i += 2) {
-            int p1 = current.next(i);
-            int p2 = current.next(i + 1);
-
-            if (skills[p1] > skills[p2]) {
-                eliminatedAt[p2] = round;
-                next.add(p1);
-            } else {
-                eliminatedAt[p1] = round;
-                next.add(p2);
-            }
-        }
-
-        current = next;
-        round++;
-    }
+    
 
 
 
