@@ -11,6 +11,12 @@ import java.util.PriorityQueue;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+
 /**
  * IMPORTANT!!! THE PROJECT'S PIPELINE : 
  * 
@@ -26,12 +32,20 @@ twoDToImage()
    ↓
 saved image
  */
+@SpringBootApplication
+
 public class ImageProcessing {
    public static void main(String[] args) {
     try {
+
+
+        SpringApplication.run(ImageProcessing.class, args);
         // Load the image from resources (works inside JAR or Docker)
         // IMPORTANT: use getResourceAsStream to read from JAR
-        try (var imageStream = ImageProcessing.class.getResourceAsStream("/images/satoru_gojo_jujutsu_kaisen.jpg")) {
+        try (       
+            
+            
+            var imageStream = ImageProcessing.class.getResourceAsStream("/images/satoru_gojo_jujutsu_kaisen.jpg")) {
             if (imageStream == null) {
                 System.err.println("Image not found in resources!");
                 return;
