@@ -1,4 +1,4 @@
-package com.example;
+package com.example.util;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -32,9 +32,11 @@ twoDToImage()
    ↓
 saved image
  */
-@SpringBootApplication
+//@SpringBootApplication
 
 public class ImageProcessingUtil {
+   /*
+   REMOVED MAIN THAT ESISTED PREVIOUSLY
    public static void main(String[] args) {
     try {
 
@@ -88,7 +90,7 @@ public class ImageProcessingUtil {
              * Testing the paintRandomImage method for painting the image with random colours 
              */
 
-            int[][] blankCanvas = new int[500][500];
+          /*   int[][] blankCanvas = new int[500][500];
 
             int[][] randomImage = paintRandomImage(blankCanvas);
 
@@ -108,7 +110,7 @@ twoDToImage(withRectangle, "output/gojo_with_rectangle.jpg");
     } catch (Exception e) {
         e.printStackTrace();
     }
-}
+}*/
 
     // Image Processing Methods
     public static int[][] trimBorders(int[][] imageTwoD, int pixelCount) {
