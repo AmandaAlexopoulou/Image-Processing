@@ -34,7 +34,7 @@ saved image
  */
 @SpringBootApplication
 
-public class ImageProcessing {
+public class ImageProcessingUtil {
    public static void main(String[] args) {
     try {
 
